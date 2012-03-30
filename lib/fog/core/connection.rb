@@ -2,13 +2,11 @@ module Fog
   class Connection
 
     def initialize(url, persistent=false, params={})
-puts url
       @excon = Excon.new(url, params)
       @persistent = persistent
     end
 
     def request(params, &block)
-puts params.inspect
       unless @persistent
         reset
       end
@@ -20,7 +18,6 @@ puts params.inspect
       end
 
       response = @excon.request(params, &block)
-puts response.inspect
 
       if parser
         body.finish
